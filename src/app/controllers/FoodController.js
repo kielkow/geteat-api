@@ -4,7 +4,7 @@ class FoodController {
   async index(req, res) {
     const { ingredients } = req.query;
 
-    const foods = await Food.find({ ingredients });
+    const foods = await Food.find({ ingredients: { $all: ingredients } });
 
     return res.json(foods);
   }
