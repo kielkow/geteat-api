@@ -4,6 +4,7 @@ export default async (req, res, next) => {
   try {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
+      description: Yup.string().required(),
       ingredients: Yup.array()
         .min(1)
         .required(),
@@ -12,6 +13,11 @@ export default async (req, res, next) => {
     await schema.validate(req.body, { abortEarly: false });
 
     req.body.name = req.body.name.toLowerCase();
+
+    req.body.ingredients = req.body.ingredients.filter(
+      ingredient => typeof ingredient === 'string'
+    );
+
     req.body.ingredients = req.body.ingredients.map(ingredient =>
       ingredient.toLowerCase()
     );

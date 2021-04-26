@@ -10,7 +10,7 @@ class FoodController {
   }
 
   async store(req, res) {
-    const { name, ingredients } = req.body;
+    const { name, description, ingredients } = req.body;
 
     const foodExists = await Food.findOne({ name });
     if (foodExists) {
@@ -19,7 +19,7 @@ class FoodController {
         .json({ error: 'A food with this name already exists' });
     }
 
-    const foodData = { name, ingredients };
+    const foodData = { name, description, ingredients };
     const food = await Food.create(foodData);
 
     return res.json(food);

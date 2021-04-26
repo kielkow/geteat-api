@@ -10,7 +10,13 @@ export default async (req, res, next) => {
 
     await schema.validate(req.query, { abortEarly: false });
 
-    req.query.ingredients = JSON.parse(req.query.ingredients).map(ingredient =>
+    req.query.ingredients = JSON.parse(req.query.ingredients);
+
+    req.query.ingredients = req.query.ingredients.filter(
+      ingredient => typeof ingredient === 'string'
+    );
+
+    req.query.ingredients = req.query.ingredients.map(ingredient =>
       ingredient.toLowerCase()
     );
 
