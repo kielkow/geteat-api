@@ -1,30 +1,40 @@
-// import Food from '../schemas/Food';
+import Food from '../schemas/Food';
 
 class FoodController {
   async index(req, res) {
-    return res.json(req.query);
-    // const { ingredients } = req.query;
+    const { ingredients } = req.query;
 
-    // const foods = await Food.find({ ingredients: { $all: ingredients } });
+    let foods = await Food.find({
+      'ingredients.name': { $all: ingredients },
+    });
 
-    // return res.json(foods);
+    if (foods.length === 0) {
+      foods = await Food.find({
+        'ingredients.name': ingredients,
+      });
+    }
+
+    const sortFoods = foods.sort(
+      (a, b) => a.ingredients.length - b.ingredients.length
+    );
+
+    return res.json(sortFoods);
   }
 
   async store(req, res) {
-    return res.json(req.body);
-    // const { name, description, ingredients } = req.body;
+    const { name, description, ingredients } = req.body;
 
-    // const foodExists = await Food.findOne({ name });
-    // if (foodExists) {
-    //   return res
-    //     .status(400)
-    //     .json({ error: 'A food with this name already exists' });
-    // }
+    const foodExists = await Food.findOne({ name });
+    if (foodExists) {
+      return res
+        .status(400)
+        .json({ error: 'A food with this name already exists' });
+    }
 
-    // const foodData = { name, description, ingredients };
-    // const food = await Food.create(foodData);
+    const foodData = { name, description, ingredients };
+    const food = await Food.create(foodData);
 
-    // return res.json(food);
+    return res.json(food);
   }
 }
 
