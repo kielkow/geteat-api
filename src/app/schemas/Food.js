@@ -1,19 +1,5 @@
 import mongoose from 'mongoose';
-
-const IngredientSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  quantity: {
-    type: Number,
-    required: true,
-  },
-  unitMeasurement: {
-    type: String,
-    required: true,
-  },
-});
+import IngredientSchema from './Ingredient';
 
 const FoodSchema = new mongoose.Schema(
   {
