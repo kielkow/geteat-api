@@ -2,25 +2,49 @@ import * as Yup from 'yup';
 
 export default async (req, res, next) => {
   try {
-    const schema = Yup.object().shape({
-      name: Yup.string().required(),
-      description: Yup.string().required(),
+    const checkType = Yup.object().shape({
+      name: Yup.string()
+        .max(30)
+        .trim()
+        .required(),
+      description: Yup.string()
+        .max(350)
+        .trim()
+        .required(),
       ingredients: Yup.array()
+        .of(
+          Yup.object().shape({
+            name: Yup.string()
+              .max(30)
+              .trim()
+              .required(),
+            quantity: Yup.number()
+              .positive()
+              .required(),
+            unitMeasurement: Yup.string()
+              .max(30)
+              .trim()
+              .required(),
+          })
+        )
         .min(1)
         .required(),
     });
+    await checkType.validate(req.body, {
+      abortEarly: false,
+      strict: true,
+    });
 
-    await schema.validate(req.body, { abortEarly: false });
-
-    req.body.name = req.body.name.toLowerCase();
-
-    req.body.ingredients = req.body.ingredients.filter(
-      ingredient => typeof ingredient === 'string'
-    );
-
-    req.body.ingredients = req.body.ingredients.map(ingredient =>
-      ingredient.toLowerCase()
-    );
+    const convertToLowerCase = Yup.object().shape({
+      name: Yup.string().lowercase(),
+      ingredients: Yup.array().of(
+        Yup.object().shape({
+          name: Yup.string().lowercase(),
+          unitMeasurement: Yup.string().lowercase(),
+        })
+      ),
+    });
+    req.body = convertToLowerCase.cast(req.body);
 
     return next();
   } catch (error) {

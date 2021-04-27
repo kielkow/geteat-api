@@ -1,28 +1,30 @@
-import Food from '../schemas/Food';
+// import Food from '../schemas/Food';
 
 class FoodController {
   async index(req, res) {
-    const { ingredients } = req.query;
+    return res.json(req.query);
+    // const { ingredients } = req.query;
 
-    const foods = await Food.find({ ingredients: { $all: ingredients } });
+    // const foods = await Food.find({ ingredients: { $all: ingredients } });
 
-    return res.json(foods);
+    // return res.json(foods);
   }
 
   async store(req, res) {
-    const { name, description, ingredients } = req.body;
+    return res.json(req.body);
+    // const { name, description, ingredients } = req.body;
 
-    const foodExists = await Food.findOne({ name });
-    if (foodExists) {
-      return res
-        .status(400)
-        .json({ error: 'A food with this name already exists' });
-    }
+    // const foodExists = await Food.findOne({ name });
+    // if (foodExists) {
+    //   return res
+    //     .status(400)
+    //     .json({ error: 'A food with this name already exists' });
+    // }
 
-    const foodData = { name, description, ingredients };
-    const food = await Food.create(foodData);
+    // const foodData = { name, description, ingredients };
+    // const food = await Food.create(foodData);
 
-    return res.json(food);
+    // return res.json(food);
   }
 }
 
