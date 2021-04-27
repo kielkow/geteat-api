@@ -10,7 +10,7 @@ export default async (req, res, next) => {
             .min(1)
             .lowercase()
         )
-        .compact(v => typeof v !== 'string' || v === '')
+        .compact(v => typeof v !== 'string')
         .min(1)
         .required(),
     });
