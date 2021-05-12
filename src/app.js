@@ -6,6 +6,7 @@ import helmet from 'helmet';
 import Youch from 'youch';
 import 'express-async-errors';
 import routes from './routes';
+import env from './config/env';
 
 import './database';
 
@@ -30,7 +31,7 @@ class App {
 
   exceptionHAndler() {
     this.server.use(async (err, req, res, next) => {
-      if (process.env.NODE_ENV === 'development') {
+      if (env.nodeEnv === 'development') {
         const errors = await new Youch(err, req).toJSON();
 
         return res.status(500).json(errors);

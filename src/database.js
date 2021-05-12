@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import env from './config/env';
 
 class Database {
   constructor() {
@@ -6,7 +7,7 @@ class Database {
   }
 
   mongo() {
-    this.mongoConnection = mongoose.connect(process.env.MONGO_URL, {
+    this.mongoConnection = mongoose.connect(env.mongoUrl, {
       useNewUrlParser: true,
       useFindAndModify: false,
       useUnifiedTopology: true,

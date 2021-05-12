@@ -1,4 +1,6 @@
+import env from './env';
+
 export default {
-  secret: process.env.APP_SECRET,
+  secret: env.appSecret,
   expiresIn: '7d',
 };
