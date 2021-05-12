@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon src/server.js",
-    "start": "node src/server.js",
+    "start": "nodemon src/server.js",
     "debug": "nodemon --inspect src/server.js"
   },
   "dependencies": {
@@ -29,5 +29,8 @@
     "nodemon": "^1.19.4",
     "prettier": "^1.18.2",
     "sucrase": "^3.10.1"
+  },
+  "engines": {
+    "node": "14.17.0"
   }
 }
