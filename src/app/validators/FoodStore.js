@@ -29,6 +29,7 @@ export default async (req, res, next) => {
         )
         .min(1)
         .required(),
+        image_url: Yup.string().required(),
     });
     await checkType.validate(req.body, {
       abortEarly: false,
